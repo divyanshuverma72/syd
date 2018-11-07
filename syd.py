@@ -1,5 +1,6 @@
 import psutil
-count = 100000000
+import time
+interval = '20'
 num = 1
 import cv2
 camera = cv2.VideoCapture(0)
@@ -13,18 +14,16 @@ def myfun():
     cv2.imwrite(file, image)
 print("No removable disk")
 while 1==1:
-    if count%100000000 == 0:
-        
-        dps = psutil.disk_partitions()
-        fmt_str = "{:<8} {:<7} {:<7}"
-        for i in range(len(dps)):
-            dp = dps[i]
-            amp=fmt_str.format(dp.device, dp.fstype, dp.opts)
-            ask=amp.find("removable")
-            if ask != -1:
-                print("removable disk found")
-                myfun()
-                break
-            num = num+1	
-    count = count + 1
+    dps = psutil.disk_partitions()
+    fmt_str = "{:<8} {:<7} {:<7}"
+    for i in range(len(dps)):
+        dp = dps[i]
+        amp=fmt_str.format(dp.device, dp.fstype, dp.opts)
+        ask=amp.find("removable")
+        if ask != -1:
+            print("removable disk found")
+            myfun()
+            break
+        num = num+1	
+    time.sleep(int(interval))
   
